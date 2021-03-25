@@ -1,0 +1,20 @@
+Entité Document
+faire une classes generale  + sous classes pour chaque type
+(titre theme editeur auteur motcle)
+
+Entité Livre ...
+
+Entité Editeur
+
+Entité Auteur
+
+Entité Exemplaire 
+
+mediatheque
+rayon ?
+
+Entité Emprunteur
+(nom .... type)
+
+Entité typeEmprunteur
+(type cd_duree dvd_duree ...)
