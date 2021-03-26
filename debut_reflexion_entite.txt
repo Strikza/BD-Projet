@@ -10,11 +10,16 @@ Entité Auteur
 
 Entité Exemplaire 
 
-mediatheque
-rayon ?
+Entité Rayon
 
 Entité Emprunteur
 (nom .... type)
 
 Entité typeEmprunteur
 (type cd_duree dvd_duree ...)
+
+
+====================================================================
+pour la cradinalité borroxer vers borrow, elle depent de la personne et du document
+
+pour les rayons, la cardinalité n'est pas vraiment de [0,n] -> pas infinie
