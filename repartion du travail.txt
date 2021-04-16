@@ -1,0 +1,24 @@
+Un fichier sql par "actions", ex : remplisages, création, transaction, requettes
+
+Tables :
+rajouter les clé et primaire + foreign key
+
+Remplissage :
+tout le monde
+
+Transactions:
+
+ajout doc
+supp doc -> samuel
+ajout emp 
+supp emp -> louis
+ajout empter
+supp empter -> clem
+
+Triggers :
+plus tard
+
+Requettes :
+louis : 1,8,14,18,6,19,17
+samuel : 20,3,2,15,9,11,7
+clem : 5,4,10,12,13,16
