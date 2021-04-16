@@ -1,97 +1,97 @@
 CREATE TABLE Document (
-  id <type>,
-  title <type>,
-  publisher <type>,
-  theme <type>
+  id int,
+  title varchar2(100),
+  id_publisher int,
+  theme varchar2(50)
 );
 
 CREATE TABLE Publisher (
-  id <type>,
-  name <type>,
-  address <type>,
-  phone <type>
+  id int,
+  name varchar2(100),
+  address varchar2(100),
+  phone varchar2(15)
 );
 
 CREATE TABLE Copy (
-  id <type>,
-  id_document <type>,
-  shelf_num <type>
+  id int,
+  id_document int,
+  shelf_num int
 );
 
 CREATE TABLE Borrower (
-  id <type>,
-  last_name <type>,
-  first_name <type>,
-  address <type>,
-  phone <type>,
-  borrower_type <type>
+  id int,
+  last_name varchar2(100),
+  first_name varchar2(100),
+  address varchar2(100),
+  phone varchar2(15),
+  borrower_type varchar2(100)
 );
 
 CREATE TABLE Keyword (
-  name <type>
+  name varchar2(50)
 );
 
 CREATE TABLE shelf (
-  shelf_num <type>,
-  remaining_slots <type>
+  shelf_num int,
+  remaining_slots int
 );
 
 CREATE TABLE Author_Document (
-  id_document <type>,
-  id_author <type>
+  id_document int,
+  id_author int
 );
 
 CREATE TABLE Borrower_type (
-  name <type>,
-  max_borrow <type>,
-  book_time <type>,
-  cd_time <type>,
-  dvd_time <type>,
-  video_time <type>
+  name varchar2(100),
+  max_borrow int,
+  book_time int,
+  cd_time int,
+  dvd_time int,
+  video_time int
 );
 
 CREATE TABLE Book (
-  id_document <type>,
-  pages_nb <type>
+  id_document int,
+  pages_nb int
 );
 
 CREATE TABLE Borrow (
-  id_copy <type>,
-  id_borrower <type>,
-  borrowed_date <type>,
-  max_return_date <type>,
-  return_date <type>
+  id_copy int,
+  id_borrower int,
+  borrowed_date date,
+  max_return_date date,
+  return_date date
 );
 
 CREATE TABLE CD (
-  id_document <type>,
-  duration <type>,
-  subtitles_nb <type>
+  id_document int,
+  duration time,
+  subtitles_nb int
 );
 
 CREATE TABLE Author (
-  id <type>,
-  last_name <type>,
-  first_name <type>,
-  birthday <type>
+  id int,
+  last_name varchar2(100),
+  first_name varchar2(100),
+  birthday date
 );
 
 CREATE TABLE Keyword_Document (
-  Keyword_name <type>,
-  id_document <type>
+  Keyword_name varchar2(50),
+  id_document int
 );
 
 CREATE TABLE Video (
-  id_document <type>,
-  duration <type>,
-  format <type>
+  id_document int,
+  duration time,
+  format varchar2(5)
 );
 
 CREATE TABLE Theme (
-  name <type>
+  name varchar2(50)
 );
 
 CREATE TABLE DVD (
-  id_document <type>,
-  duration <type>
+  id_document int,
+  duration time
 );
