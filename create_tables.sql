@@ -1,10 +1,11 @@
+
 CREATE TABLE Document (
   id int,
   title varchar2(100),
   id_publisher int,
   theme varchar2(50),
   constraint PK_Document primary key (id),
-  constraint FK_Document_Publisher foreign key (id_publisher) references Publisher(id)
+  constraint FK_Document_Publisher foreign key (id_publisher) references Publisher(id),
   constraint FK_Document_Theme foreign key (theme) references Theme(name)
 );
 
@@ -28,7 +29,7 @@ CREATE TABLE AuthorDocument (
   id_document int,
   id_author int,
   constraint PK_AuthorDocument primary key (id_document, id_author),
-  constraint FK_AuthorDocument_Author foreign key (id_author) references Author(id)
+  constraint FK_AuthorDocument_Author foreign key (id_author) references Author(id),
   constraint FK_AuthorDocument_Document foreign key (id_document) references Document(id)
 );
 
@@ -50,6 +51,7 @@ CREATE TABLE Theme (
   constraint PK_Theme primary key (name)
 );
 
+drop table document cascade constraints;
 CREATE TABLE Book (
   id_document int,
   pages_nb int,
@@ -59,7 +61,7 @@ CREATE TABLE Book (
 
 CREATE TABLE CD (
   id_document int,
-  duration time,
+  duration int,
   subtitles_nb int,
   constraint PK_CD primary key (id_document),
   constraint FK_CD_Document foreign key (id_document) references Document(id)
@@ -67,14 +69,14 @@ CREATE TABLE CD (
 
 CREATE TABLE DVD (
   id_document int,
-  duration time,
+  duration int,
   constraint PK_DVD primary key (id_document),
   constraint FK_DVD_Document foreign key (id_document) references Document(id)
 );
 
 CREATE TABLE Video (
   id_document int,
-  duration time,
+  duration int,
   format varchar2(5),
   constraint PK_Video primary key (id_document),
   constraint FK_Video_Document foreign key (id_document) references Document(id)
