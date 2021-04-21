@@ -1,12 +1,18 @@
+CREATE TABLE Type (
+  name varchar2(30),
+  constraint PK_Type primary key (name)
+);
 
 CREATE TABLE Document (
   id int,
   title varchar2(100),
   id_publisher int,
   theme varchar2(50),
+  type varchar2(30),
   constraint PK_Document primary key (id),
   constraint FK_Document_Publisher foreign key (id_publisher) references Publisher(id),
   constraint FK_Document_Theme foreign key (theme) references Theme(name)
+  constraint FK_Document_Type foreign key (type) references Type(name)
 );
 
 CREATE TABLE Publisher (
@@ -56,7 +62,7 @@ CREATE TABLE Book (
   id_document int,
   pages_nb int,
   constraint PK_Book primary key (id_document),
-  constraint FK_Book_Document foreign key (id_document) references Document(id)
+  constraint FK_Book_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
 CREATE TABLE CD (
@@ -64,14 +70,14 @@ CREATE TABLE CD (
   duration int,
   subtitles_nb int,
   constraint PK_CD primary key (id_document),
-  constraint FK_CD_Document foreign key (id_document) references Document(id)
+  constraint FK_CD_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
 CREATE TABLE DVD (
   id_document int,
   duration int,
   constraint PK_DVD primary key (id_document),
-  constraint FK_DVD_Document foreign key (id_document) references Document(id)
+  constraint FK_DVD_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
 CREATE TABLE Video (
@@ -79,7 +85,7 @@ CREATE TABLE Video (
   duration int,
   format varchar2(5),
   constraint PK_Video primary key (id_document),
-  constraint FK_Video_Document foreign key (id_document) references Document(id)
+  constraint FK_Video_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
 CREATE TABLE Copy (
