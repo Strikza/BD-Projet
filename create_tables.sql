@@ -3,18 +3,6 @@ CREATE TABLE Type (
   constraint PK_Type primary key (name)
 );
 
-CREATE TABLE Document (
-  id int,
-  title varchar2(100),
-  id_publisher int,
-  theme varchar2(50),
-  type varchar2(30),
-  constraint PK_Document primary key (id),
-  constraint FK_Document_Publisher foreign key (id_publisher) references Publisher(id),
-  constraint FK_Document_Theme foreign key (theme) references Theme(name)
-  constraint FK_Document_Type foreign key (type) references Type(name)
-);
-
 CREATE TABLE Publisher (
   id int,
   name varchar2(100),
@@ -31,6 +19,51 @@ CREATE TABLE Author (
   constraint PK_Author primary key (id)
 );
 
+CREATE TABLE Keyword (
+  name varchar2(50),
+  constraint PK_Keyword primary key (name)
+);
+
+CREATE TABLE Theme (
+  name varchar2(50),
+  constraint PK_Theme primary key (name)
+);
+
+CREATE TABLE Shelf (
+  shelf_num int,
+  remaining_slots int,
+  constraint PK_Shelf primary key (shelf_num)
+);
+
+CREATE TABLE Borrowertype (
+  name varchar2(100),
+  max_borrow int,
+  constraint PK_Borrower_type primary key (name)
+);
+
+CREATE TABLE BorrowTime (
+  borrower_type varchar2(100),
+  doc_type varchar2(30),
+  borrow_time int,
+  constraint PK_BorrowerTime primary key (borrower_type,doc_type),
+  constraint FK_BorrowerTime_Type foreign key (borrower_type) references Type(name),
+  constraint FK_BorrowerTime_BorrowerTyme foreign key (doc_type) references BorrowerType(name)
+);
+
+CREATE TABLE Document (
+  id int,
+  title varchar2(100),
+  id_publisher int,
+  theme varchar2(50),
+  type varchar2(30),
+  constraint PK_Document primary key (id),
+  constraint FK_Document_Publisher foreign key (id_publisher) references Publisher(id),
+  constraint FK_Document_Theme foreign key (theme) references Theme(name)
+  constraint FK_Document_Type foreign key (type) references Type(name)
+);
+
+
+
 CREATE TABLE AuthorDocument (
   id_document int,
   id_author int,
@@ -39,10 +72,7 @@ CREATE TABLE AuthorDocument (
   constraint FK_AuthorDocument_Document foreign key (id_document) references Document(id)
 );
 
-CREATE TABLE Keyword (
-  name varchar2(50),
-  constraint PK_Keyword primary key (name)
-);
+
 
 CREATE TABLE KeywordDocument (
   Keyword_name varchar2(50),
@@ -52,12 +82,7 @@ CREATE TABLE KeywordDocument (
   constraint FK_KeywordDocument_Document foreign key (id_document) references Document(id)
 );
 
-CREATE TABLE Theme (
-  name varchar2(50),
-  constraint PK_Theme primary key (name)
-);
 
-drop table document cascade constraints;
 CREATE TABLE Book (
   id_document int,
   pages_nb int,
@@ -96,11 +121,6 @@ CREATE TABLE Copy (
   constraint FK_Copy_Document foreign key (id_document) references Document(id)
 );
 
-CREATE TABLE Shelf (
-  shelf_num int,
-  remaining_slots int,
-  constraint PK_Shelf primary key (shelf_num)
-);
 
 CREATE TABLE Borrower (
   id int,
@@ -113,15 +133,7 @@ CREATE TABLE Borrower (
   constraint FK_Borrower_Borrowertype foreign key (borrower_type) references Borrowertype(name)
 );
 
-CREATE TABLE Borrowertype (
-  name varchar2(100),
-  max_borrow int,
-  book_time int,
-  cd_time int,
-  dvd_time int,
-  video_time int,
-  constraint PK_Borrower_type primary key (name)
-);
+
 
 CREATE TABLE Borrow (
   id_copy int,
