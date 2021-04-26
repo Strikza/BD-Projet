@@ -78,8 +78,8 @@ CREATE TABLE KeywordDocument (
   Keyword_name varchar2(50),
   id_document int,
   constraint PK_KeywordDocument primary key (Keyword_name, id_document),
-  constraint FK_KeywordDocument_Keyword foreign key (keyword_name) references Keyword(name),
-  constraint FK_KeywordDocument_Document foreign key (id_document) references Document(id)
+  constraint FK_KeywordDocument_Keyword foreign key (keyword_name) references Keyword(name) on delete set null,
+  constraint FK_KeywordDocument_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
 
