@@ -2,8 +2,10 @@ alter TABLE shelf
 add CONSTRAINT CK_shelf_max check (remaining_slots BETWEEN 0 and 30);
 
 alter table document
-add constraint CK_document_type check (title is not null);
+add constraint CK_document_title check (title is not null);
 
+alter table borrow
+add constraint CK_borrow_date check (borrowed_date is not null);
 
 CREATE or replace trigger trig_borrow_max_date
 before insert OR UPDATE 

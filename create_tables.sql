@@ -46,8 +46,8 @@ CREATE TABLE BorrowTime (
   doc_type varchar2(30),
   borrow_time int,
   constraint PK_BorrowerTime primary key (borrower_type,doc_type),
-  constraint FK_BorrowerTime_Type foreign key (borrower_type) references Type(name),
-  constraint FK_BorrowerTime_BorrowerTyme foreign key (doc_type) references BorrowerType(name)
+  constraint FK_BorrowerTime_Type foreign key (borrower_type) references Type(name) on delete cascade,
+  constraint FK_BorrowerTime_BorrowerTyme foreign key (doc_type) references BorrowerType(name) on delete cascade
 );
 
 CREATE TABLE Document (
@@ -57,9 +57,9 @@ CREATE TABLE Document (
   theme varchar2(50),
   type varchar2(30),
   constraint PK_Document primary key (id),
-  constraint FK_Document_Publisher foreign key (id_publisher) references Publisher(id),
-  constraint FK_Document_Theme foreign key (theme) references Theme(name)
-  constraint FK_Document_Type foreign key (type) references Type(name)
+  constraint FK_Document_Publisher foreign key (id_publisher) references Publisher(id) on delete set null,
+  constraint FK_Document_Theme foreign key (theme) references Theme(name) on delete set null,
+  constraint FK_Document_Type foreign key (type) references Type(name) on delete cascade
 );
 
 
@@ -68,8 +68,8 @@ CREATE TABLE AuthorDocument (
   id_document int,
   id_author int,
   constraint PK_AuthorDocument primary key (id_document, id_author),
-  constraint FK_AuthorDocument_Author foreign key (id_author) references Author(id),
-  constraint FK_AuthorDocument_Document foreign key (id_document) references Document(id)
+  constraint FK_AuthorDocument_Author foreign key (id_author) references Author(id) on delete set null,
+  constraint FK_AuthorDocument_Document foreign key (id_document) references Document(id) on delete set null
 );
 
 
@@ -118,7 +118,8 @@ CREATE TABLE Copy (
   id_document int,
   shelf_num int,
   constraint PK_Copy primary key (id),
-  constraint FK_Copy_Document foreign key (id_document) references Document(id)
+  constraint FK_Copy_Document foreign key (id_document) references Document(id) on delete cascade,
+  constraint FK_Copy_Shelf foreign key (shelf_num) references Shelf(shelf_num) on delete set null
 );
 
 
@@ -130,7 +131,7 @@ CREATE TABLE Borrower (
   phone varchar2(15),
   borrower_type varchar2(100),
   constraint PK_Borrower primary key (id),
-  constraint FK_Borrower_Borrowertype foreign key (borrower_type) references Borrowertype(name)
+  constraint FK_Borrower_Borrowertype foreign key (borrower_type) references Borrowertype(name) on delete set null
 );
 
 
@@ -142,8 +143,8 @@ CREATE TABLE Borrow (
   max_return_date date,
   return_date date,
   constraint PK_Borrow primary key (id_copy, id_borrower, borrowed_date),
-  constraint FK_Borrow_Copy foreign key (id_copy) references Copy(id),
-  constraint FK_Borrow_Borrower foreign key (id_borrower) references Borrower(id)
+  constraint FK_Borrow_Copy foreign key (id_copy) references Copy(id) on delete set null,
+  constraint FK_Borrow_Borrower foreign key (id_borrower) references Borrower(id) on delete set null
 );
 
 
