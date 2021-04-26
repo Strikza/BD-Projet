@@ -26,3 +26,44 @@ where copy.id = :New.id_copy;
     and bot.doc_type = type_doc;
 end;
 /
+
+
+CREATE or replace trigger trig_shelf_num
+before insert or update
+on copy for EACH row
+DECLARE new_num shelf.remaining_slots%type;
+BEGIN
+select remaining_slots -1 
+into new_num
+from shelf
+where shelf.shelf_num = :new.shelf_num;
+if new_num < 0
+then raise_application_error('-20001', 'il n y a plus de place dans le rayon');
+else UPDATE shelf
+    set remaining_slots = remaining_slots -1
+    where :new.shelf_num = shelf.shelf_num;
+end if;
+end;
+/
+
+CREATE or replace trigger trig_borrow_max_borrow
+before insert or update
+on borrow for EACH row
+DECLARE 
+max_b borrowertype.max_borrow%type;
+current_b number;
+BEGIN
+select borrowertype.max_borrow
+into max_b
+from borrowertype
+inner join borrower on borrower.borrower_type = borrowertype.name
+where borrower.id = :new.id_borrower;
+select count(*)
+into current_b
+from borrow
+where :new.id_borrower = id_borrower;
+if current_b + 1 > max_b
+then raise_application_error('-20001', 'vous devez rendre un document avant de pouvoir emprunter celui-la');
+end if;
+end;
+/
