@@ -23,7 +23,24 @@ where copy.id = :New.id_copy;
     where :New.id_borrower = b.id
     and b.borrower_type = bt.name
     and bot.borrower_type = bt.name
-    and bot.doc_type = type_doc;
+    and upper(bot.doc_type) = type_doc;
+end;
+/
+
+CREATE or replace trigger trig_borrow_after_date_return
+before insert OR UPDATE 
+on borrow for EACH row
+DECLARE 
+date_max borrow.max_return_date%type;
+date_return borrow.return_date%type;
+BEGIN
+select max_return_date,return_date
+into date_max,date_return
+from borrow
+where borrow.id_borrower = :new.id_borrower;
+if (date_return is null and date_max < sysdate) 
+then raise_application_error('-20001', 'Vous avez dépasser la date limite d emprunt pour un document');
+end if;
 end;
 /
 
@@ -64,6 +81,24 @@ from borrow
 where :new.id_borrower = id_borrower;
 if current_b + 1 > max_b
 then raise_application_error('-20001', 'vous devez rendre un document avant de pouvoir emprunter celui-la');
+end if;
+end;
+/
+
+
+CREATE or replace trigger trig_borrow_doc_already_borrowed
+before insert OR UPDATE 
+on borrow for EACH row
+DECLARE
+already_borrowed borrow.id_copy%type;
+BEGIN
+select id_copy
+into already_borrowed
+from borrow
+where :new.id_copy = borrow.id_copy
+and borrow.return_date is not null;
+if already_borrowed is not null
+then raise_application_error('-20001', 'Ce document est deja emprunté.');
 end if;
 end;
 /
