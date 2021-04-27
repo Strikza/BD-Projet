@@ -1,8 +1,12 @@
+drop table type;
 CREATE TABLE Type (
   name varchar2(30),
   constraint PK_Type primary key (name)
 );
 
+
+
+drop table publisher;
 CREATE TABLE Publisher (
   id int,
   name varchar2(100),
@@ -11,6 +15,17 @@ CREATE TABLE Publisher (
   constraint PK_Publisher primary key (id)
 );
 
+drop sequence seq_publisher;
+create SEQUENCE seq_publisher;
+
+create or replace trigger trig_publisher
+before insert on Publisher for each row
+begin
+select seq_publisher.nextval into :new.id from dual;
+end;
+/
+
+drop table author;
 CREATE TABLE Author (
   id int,
   last_name varchar2(100),
@@ -19,28 +34,43 @@ CREATE TABLE Author (
   constraint PK_Author primary key (id)
 );
 
+drop sequence seq_author;
+create SEQUENCE seq_author;
+
+create or replace trigger trig_author
+before insert on Author for each row
+begin
+select seq_author.nextval into :new.id from dual;
+end;
+/
+
+drop table keyword;
 CREATE TABLE Keyword (
   name varchar2(50),
   constraint PK_Keyword primary key (name)
 );
 
+drop table theme;
 CREATE TABLE Theme (
   name varchar2(50),
   constraint PK_Theme primary key (name)
 );
 
+drop table shelf;
 CREATE TABLE Shelf (
   shelf_num int,
   remaining_slots int,
   constraint PK_Shelf primary key (shelf_num)
 );
 
+drop table borrowertype;
 CREATE TABLE Borrowertype (
   name varchar2(100),
   max_borrow int,
   constraint PK_Borrower_type primary key (name)
 );
 
+drop table borrowtime;
 CREATE TABLE BorrowTime (
   borrower_type varchar2(100),
   doc_type varchar2(30),
@@ -50,6 +80,7 @@ CREATE TABLE BorrowTime (
   constraint FK_BorrowerTime_BorrowerTyme foreign key (doc_type) references BorrowerType(name) on delete cascade
 );
 
+drop table document;
 CREATE TABLE Document (
   id int,
   title varchar2(100),
@@ -62,8 +93,17 @@ CREATE TABLE Document (
   constraint FK_Document_Type foreign key (type) references Type(name) on delete cascade
 );
 
+drop sequence seq_document;
+create SEQUENCE seq_document;
 
+create or replace trigger trig_document
+before insert on Document for each row
+begin
+select seq_document.nextval into :new.id from dual;
+end;
+/
 
+drop table authordocument;
 CREATE TABLE AuthorDocument (
   id_document int,
   id_author int,
@@ -73,7 +113,7 @@ CREATE TABLE AuthorDocument (
 );
 
 
-
+drop table keyworddocument;
 CREATE TABLE KeywordDocument (
   Keyword_name varchar2(50),
   id_document int,
@@ -82,7 +122,7 @@ CREATE TABLE KeywordDocument (
   constraint FK_KeywordDocument_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
-
+drop table book;
 CREATE TABLE Book (
   id_document int,
   pages_nb int,
@@ -90,6 +130,7 @@ CREATE TABLE Book (
   constraint FK_Book_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
+drop table cd;
 CREATE TABLE CD (
   id_document int,
   duration int,
@@ -98,6 +139,7 @@ CREATE TABLE CD (
   constraint FK_CD_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
+drop table dvd;
 CREATE TABLE DVD (
   id_document int,
   duration int,
@@ -105,6 +147,7 @@ CREATE TABLE DVD (
   constraint FK_DVD_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
+drop table video;
 CREATE TABLE Video (
   id_document int,
   duration int,
@@ -113,6 +156,7 @@ CREATE TABLE Video (
   constraint FK_Video_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
+drop table copy;
 CREATE TABLE Copy (
   id int,
   id_document int,
@@ -122,7 +166,17 @@ CREATE TABLE Copy (
   constraint FK_Copy_Shelf foreign key (shelf_num) references Shelf(shelf_num) on delete set null
 );
 
+drop sequence seq_copy;
+create SEQUENCE seq_copy;
 
+create or replace trigger trig_copy
+before insert on Copy for each row
+begin
+select seq_copy.nextval into :new.id from dual;
+end;
+/
+
+drop table borrower;
 CREATE TABLE Borrower (
   id int,
   last_name varchar2(100),
@@ -134,8 +188,17 @@ CREATE TABLE Borrower (
   constraint FK_Borrower_Borrowertype foreign key (borrower_type) references Borrowertype(name) on delete set null
 );
 
+drop sequence seq_borrower;
+create SEQUENCE seq_borrower;
 
+create or replace trigger trig_borrwer
+before insert on Borrower for each row
+begin
+select seq_borrower.nextval into :new.id from dual;
+end;
+/
 
+drop table borrow;
 CREATE TABLE Borrow (
   id_copy int,
   id_borrower int,
