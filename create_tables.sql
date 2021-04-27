@@ -76,8 +76,8 @@ CREATE TABLE BorrowTime (
   doc_type varchar2(30),
   borrow_time int,
   constraint PK_BorrowerTime primary key (borrower_type,doc_type),
-  constraint FK_BorrowerTime_Type foreign key (borrower_type) references Type(name) on delete cascade,
-  constraint FK_BorrowerTime_BorrowerTyme foreign key (doc_type) references BorrowerType(name) on delete cascade
+  constraint FK_BorrowerTime_BorrowerType foreign key (borrower_type) references BorrowerType(name) on delete cascade,
+  constraint FK_BorrowerTime_Type foreign key (doc_type) references Type(name) on delete cascade
 );
 
 drop table document;
