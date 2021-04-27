@@ -1,12 +1,10 @@
-drop table type;
+drop table type cascade constraints;
 CREATE TABLE Type (
   name varchar2(30),
   constraint PK_Type primary key (name)
 );
 
-
-
-drop table publisher;
+drop table publisher cascade constraints;
 CREATE TABLE Publisher (
   id int,
   name varchar2(100),
@@ -25,7 +23,7 @@ select seq_publisher.nextval into :new.id from dual;
 end;
 /
 
-drop table author;
+drop table author cascade constraints;
 CREATE TABLE Author (
   id int,
   last_name varchar2(100),
@@ -44,33 +42,33 @@ select seq_author.nextval into :new.id from dual;
 end;
 /
 
-drop table keyword;
+drop table keyword cascade constraints;
 CREATE TABLE Keyword (
   name varchar2(50),
   constraint PK_Keyword primary key (name)
 );
 
-drop table theme;
+drop table theme cascade constraints;
 CREATE TABLE Theme (
   name varchar2(50),
   constraint PK_Theme primary key (name)
 );
 
-drop table shelf;
+drop table shelf cascade constraints;
 CREATE TABLE Shelf (
   shelf_num int,
   remaining_slots int,
   constraint PK_Shelf primary key (shelf_num)
 );
 
-drop table borrowertype;
+drop table borrowertype cascade constraints;
 CREATE TABLE Borrowertype (
   name varchar2(100),
   max_borrow int,
   constraint PK_Borrower_type primary key (name)
 );
 
-drop table borrowtime;
+drop table borrowtime cascade constraints;
 CREATE TABLE BorrowTime (
   borrower_type varchar2(100),
   doc_type varchar2(30),
@@ -80,7 +78,7 @@ CREATE TABLE BorrowTime (
   constraint FK_BorrowerTime_BorrowerTyme foreign key (doc_type) references Type(name) on delete cascade
 );
 
-drop table document;
+drop table document cascade constraints;
 CREATE TABLE Document (
   id int,
   title varchar2(100),
@@ -103,7 +101,7 @@ select seq_document.nextval into :new.id from dual;
 end;
 /
 
-drop table authordocument;
+drop table authordocument cascade constraints;
 CREATE TABLE AuthorDocument (
   id_document int,
   id_author int,
@@ -113,7 +111,7 @@ CREATE TABLE AuthorDocument (
 );
 
 
-drop table keyworddocument;
+drop table keyworddocument cascade constraints;
 CREATE TABLE KeywordDocument (
   Keyword_name varchar2(50),
   id_document int,
@@ -122,7 +120,7 @@ CREATE TABLE KeywordDocument (
   constraint FK_KeywordDocument_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
-drop table book;
+drop table book cascade constraints;
 CREATE TABLE Book (
   id_document int,
   pages_nb int,
@@ -130,7 +128,7 @@ CREATE TABLE Book (
   constraint FK_Book_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
-drop table cd;
+drop table cd cascade constraints;
 CREATE TABLE CD (
   id_document int,
   duration int,
@@ -139,7 +137,7 @@ CREATE TABLE CD (
   constraint FK_CD_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
-drop table dvd;
+drop table dvd cascade constraints;
 CREATE TABLE DVD (
   id_document int,
   duration int,
@@ -147,7 +145,7 @@ CREATE TABLE DVD (
   constraint FK_DVD_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
-drop table video;
+drop table video cascade constraints;
 CREATE TABLE Video (
   id_document int,
   duration int,
@@ -156,7 +154,7 @@ CREATE TABLE Video (
   constraint FK_Video_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
-drop table copy;
+drop table copy cascade constraints;
 CREATE TABLE Copy (
   id int,
   id_document int,
@@ -176,7 +174,7 @@ select seq_copy.nextval into :new.id from dual;
 end;
 /
 
-drop table borrower;
+drop table borrower cascade constraints;
 CREATE TABLE Borrower (
   id int,
   last_name varchar2(100),
@@ -198,7 +196,7 @@ select seq_borrower.nextval into :new.id from dual;
 end;
 /
 
-drop table borrow;
+drop table borrow cascade constraints;
 CREATE TABLE Borrow (
   id_copy int,
   id_borrower int,
