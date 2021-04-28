@@ -85,11 +85,13 @@ insert into publisher (name,address,phone) values ('Dunod','11 Rue Paul Bert 922
 insert into publisher (name,address,phone) values ('Larousse','21 Rue du Montparnasse 75283 Paris',0144394400) ;
 insert into publisher (name,address,phone) values ('Gallimard','5 Rue Gaston Gallimard 75007 Paris',0149544200) ;
 insert into publisher (name) values ('Youtube');
+insert into publisher (name,address) values ('Fnac','9 rue Bateaux-Lavoir');
 
 -- shelf
 insert into shelf (shelf_num,remaining_slots) values (1,30) ;
 insert into shelf (shelf_num,remaining_slots) values (2,25) ;
 insert into shelf (shelf_num,remaining_slots) values (3,28) ;
+insert into shelf (shelf_num,remaining_slots) values (4,15) ;
 
 -- author
 insert into author (last_name,first_name,birthday)
@@ -139,18 +141,18 @@ insert into document(title,id_publisher,theme,type) values ('Vingt Mille Lieues 
 insert into document(title,id_publisher,theme,type) values ('SQL pour les nuls',3,'informatique','book');
 insert into document(title,id_publisher,theme,type) values ('Apprendre le C++',3,'informatique','book');
 insert into document(title,id_publisher,theme,type) values ('Mathématiques discrètes et combinatoire',3,'mathematique','book');
-insert into document(title,id_publisher,theme,type) values ('Stadium Arcadium', ,'musique','cd');
-insert into document(title,id_publisher,theme,type) values ('The Works', ,'musique','cd');
-insert into document(title,id_publisher,theme,type) values ('Fight Club', ,'thriller','dvd');
-insert into document(title,id_publisher,theme,type) values ('Gladiator', ,'heroique','dvd');
-insert into document(title,id_publisher,theme,type) values ('Star Wars IV', ,'espace','dvd');
-insert into document(title,id_publisher,theme,type) values ('Star Wars V', ,'espace','dvd');
-insert into document(title,id_publisher,theme,type) values ('Star Wars VI', ,'espace','dvd');
+insert into document(title,id_publisher,theme,type) values ('Stadium Arcadium',6,'musique','cd');
+insert into document(title,id_publisher,theme,type) values ('The Works',6,'musique','cd');
+insert into document(title,id_publisher,theme,type) values ('Fight Club',6,'thriller','dvd');
+insert into document(title,id_publisher,theme,type) values ('Gladiator',6,'heroique','dvd');
+insert into document(title,id_publisher,theme,type) values ('Star Wars IV',6,'espace','dvd');
+insert into document(title,id_publisher,theme,type) values ('Star Wars V',6 ,'espace','dvd');
+insert into document(title,id_publisher,theme,type) values ('Star Wars VI',6,'espace','dvd');
 insert into document(title,id_publisher,theme,type) values ('Loutre',5,'ocean','video');
 insert into document(title,id_publisher,theme,type) values ('Configurer Symfony',5,'informatique','video');
 insert into document(title,id_publisher,theme,type) values ('AVL tree',5,'mathematique','video');
 insert into document(title,id_publisher,theme,type) values ('Oracle SQL Introduction',5,'informatique','video');
-insert into document(title,id_publisher,theme,type) values ('Database',,'musique','cd');
+insert into document(title,id_publisher,theme,type) values ('Database',6,'musique','cd');
 insert into document(title,id_publisher,theme,type) values ('SQL',3,'informatique','book');
 
 -- book
@@ -220,5 +222,41 @@ insert into keyworddocument (keyword_name,id_document) values (18,'entite');
 insert into keyworddocument (keyword_name,id_document) values (18,'database');
 
 -- copy
+insert into copy (id_document,shelf_num) values (1,1);
+insert into copy (id_document,shelf_num) values (1,1);
+insert into copy (id_document,shelf_num) values (1,1);
+insert into copy (id_document,shelf_num) values (2,1);
+insert into copy (id_document,shelf_num) values (2,1);
+insert into copy (id_document,shelf_num) values (3,1);
+insert into copy (id_document,shelf_num) values (4,1);
+insert into copy (id_document,shelf_num) values (4,1);
+insert into copy (id_document,shelf_num) values (5,1);
+insert into copy (id_document,shelf_num) values (18,1);
+insert into copy (id_document,shelf_num) values (18,1);
+
+insert into copy (id_document,shelf_num) values (6,2);
+insert into copy (id_document,shelf_num) values (6,2);
+insert into copy (id_document,shelf_num) values (6,2);
+insert into copy (id_document,shelf_num) values (7,2);
+insert into copy (id_document,shelf_num) values (7,2);
+insert into copy (id_document,shelf_num) values (7,2);
+insert into copy (id_document,shelf_num) values (7,2);
+insert into copy (id_document,shelf_num) values (17,2);
+insert into copy (id_document,shelf_num) values (17,2);
+
+insert into copy (id_document,shelf_num) values (8,3);
+insert into copy (id_document,shelf_num) values (9,3);
+insert into copy (id_document,shelf_num) values (10,3);
+insert into copy (id_document,shelf_num) values (10,3);
+insert into copy (id_document,shelf_num) values (11,3);
+insert into copy (id_document,shelf_num) values (11,3);
+insert into copy (id_document,shelf_num) values (12,3);
+insert into copy (id_document,shelf_num) values (12,3);
+
+insert into copy (id_document,shelf_num) values (13,4);
+insert into copy (id_document,shelf_num) values (14,4);
+insert into copy (id_document,shelf_num) values (15,4);
+insert into copy (id_document,shelf_num) values (16,4);
+insert into copy (id_document,shelf_num) values (16,4);
 
 -- borrow
