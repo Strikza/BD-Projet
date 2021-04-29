@@ -207,7 +207,7 @@ insert into authordocument (id_document,id_author) values (17,19);
 insert into authordocument (id_document,id_author) values (18,3);
 
 -- keyword_document
-insert into keyworddocument (keyword_name,id_document) values (1,'chavalier');
+insert into keyworddocument (keyword_name,id_document) values (1,'chevalier');
 insert into keyworddocument (keyword_name,id_document) values (2,'lamentin');
 insert into keyworddocument (keyword_name,id_document) values (3,'sql');
 insert into keyworddocument (keyword_name,id_document) values (3,'entite');
@@ -260,3 +260,47 @@ insert into copy (id_document,shelf_num) values (16,4);
 insert into copy (id_document,shelf_num) values (16,4);
 
 -- borrow
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (1,1,to_date('15/12/2018','dd/mm/yyyy'),to_date('23/12/2018','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (3,8,to_date('5/5/2015','dd/mm/yyyy'),to_date('26/5/2015','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (6,4,to_date('23/8/2020','dd/mm/yyyy'),to_date('12/9/2020','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (9,3,to_date('19/11/2019','dd/mm/yyyy'),to_date('26/11/2019','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (12,1,to_date('13/1/2018','dd/mm/yyyy'),to_date('28/1/2018','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (13,10,to_date('02/02/2020','dd/mm/yyyy'),to_date('23/02/2020','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (5,13,to_date('9/8/2017','dd/mm/yyyy'),to_date('16/8/2017','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (1,2,to_date('15/04/2019','dd/mm/yyyy'),to_date('26/04/2019','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (1,3,to_date('03/06/2020','dd/mm/yyyy'),to_date('15/06/2020','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (14,1,to_date('09/10/2018','dd/mm/yyyy'),to_date('17/10/2018','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (7,4,to_date('18/01/2019','dd/mm/yyyy'),to_date('26/01/2019','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (8,3,to_date('23/04/2020','dd/mm/yyyy'),to_date('08/05/2020','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (12,11,to_date('09/02/2017','dd/mm/yyyy'),to_date('21/02/2017','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (11,10,to_date('06/03/2020','dd/mm/yyyy'),to_date('20/03/2020','dd/mm/yyyy'))
+
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (7,6,to_date('08/12/2020','dd/mm/yyyy'),to_date('12/12/2020','dd/mm/yyyy'))
