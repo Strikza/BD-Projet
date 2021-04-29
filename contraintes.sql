@@ -7,6 +7,7 @@ add constraint CK_document_title check (title is not null);
 alter table borrow
 add constraint CK_borrow_date check (borrowed_date is not null);
 
+-- creer la date de retour automatiquement
 CREATE or replace trigger trig_borrow_max_date
 before insert OR UPDATE 
 on borrow for EACH row
@@ -27,6 +28,7 @@ where copy.id = :New.id_copy;
 end;
 /
 
+-- empeche l'emprunt d'un doc si on a depassé la date limite de retour d'un doc deja emprunté
 CREATE or replace trigger trig_borrow_after_date_return
 before insert OR UPDATE 
 on borrow for EACH row
@@ -44,7 +46,7 @@ end if;
 end;
 /
 
-
+-- verifie lors de l'ajout d'un doc dans un rayon qu'il y ait de la place + decremente la place dans le rayon
 CREATE or replace trigger trig_shelf_num
 before insert or update
 on copy for EACH row
@@ -63,6 +65,7 @@ end if;
 end;
 /
 
+-- verifie que l'on a pas atteint le nombre maximum d'emprunts
 CREATE or replace trigger trig_borrow_max_borrow
 before insert or update
 on borrow for EACH row
@@ -85,7 +88,7 @@ end if;
 end;
 /
 
-
+-- verifie que le doc que l'on veut emprunter n'est pas deja pris
 CREATE or replace trigger trig_borrow_doc_already_borrowed
 before insert OR UPDATE 
 on borrow for EACH row
@@ -102,3 +105,4 @@ then raise_application_error('-20001', 'Ce document est deja empruntÃ©.');
 end if;
 end;
 /
+
