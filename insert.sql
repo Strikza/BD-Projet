@@ -55,7 +55,7 @@ values ('BRoCCOLI','Pierrette','40 avenue de l''Amandier 93140 BONDY', 018688271
 insert into borrower (last_name,first_name,address,phone,borrower_type)
 values ('LEBEL','Roland','23 Rue Joseph Vernet 93170 BAGNOLET', 0149085467, 'public') ;
 insert into borrower (last_name,first_name,address,phone,borrower_type)
-values ('LEMAITRE','Phillipe',' 81 rue Gustave Eiffel 91000 RIS-ORANGIS', 0179507726, 'professionnel') ;
+values ('LEMAITRE','Phillipe','81 rue Gustave Eiffel 91000 RIS-ORANGIS', 0179507726, 'professionnel') ;
 
 -- theme
 insert into theme (name) values ('informatique') ;
