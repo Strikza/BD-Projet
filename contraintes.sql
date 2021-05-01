@@ -7,44 +7,33 @@ add constraint CK_document_title check (title is not null);
 alter table borrow
 add constraint CK_borrow_date check (borrowed_date is not null);
 
--- creer la date de retour automatiquement
+drop trigger TRIG_BORROW_AFTER_DATE_RETURN;
+
+-- creer la date de retour automatiquement + verifie que la date de retour et correcte
 CREATE or replace trigger trig_borrow_max_date
 before insert OR UPDATE 
 on borrow for EACH row
 DECLARE type_doc document.type%type;
 BEGIN
-select upper(type) 
-into type_doc 
-from document
-inner join copy on copy.id_document = document.id
-where copy.id = :New.id_copy;
+    select type 
+    into type_doc 
+    from document
+    inner join copy on copy.id_document = document.id
+    where copy.id = :New.id_copy;
+    
     select (bot.borrow_time + :New.borrowed_date)
     into :new.max_return_date
     from borrowertype bt, borrower b, borrowtime bot
     where :New.id_borrower = b.id
     and b.borrower_type = bt.name
     and bot.borrower_type = bt.name
-    and upper(bot.doc_type) = type_doc;
+    and bot.doc_type = type_doc;
+    
+    if :new.return_date is not null and :new.max_return_date < :new.return_date
+    then raise_application_error('-20001', 'Vous avez d√©passer la date limite d emprunt pour ce document');
+    end if;
 end;
-/
 
--- empeche l'emprunt d'un doc si on a depassÈ la date limite de retour d'un doc deja empruntÈ
-CREATE or replace trigger trig_borrow_after_date_return
-before insert OR UPDATE 
-on borrow for EACH row
-DECLARE 
-date_max borrow.max_return_date%type;
-date_return borrow.return_date%type;
-BEGIN
-select max_return_date,return_date
-into date_max,date_return
-from borrow
-where borrow.id_borrower = :new.id_borrower;
-if (date_return is null and date_max < sysdate) 
-then raise_application_error('-20001', 'Vous avez d√©passer la date limite d emprunt pour un document');
-end if;
-end;
-/
 
 -- verifie lors de l'ajout d'un doc dans un rayon qu'il y ait de la place + decremente la place dans le rayon
 CREATE or replace trigger trig_shelf_num
@@ -81,28 +70,37 @@ where borrower.id = :new.id_borrower;
 select count(*)
 into current_b
 from borrow
-where :new.id_borrower = id_borrower;
+where :new.id_borrower = id_borrower
+and return_date is null;
 if current_b + 1 > max_b
 then raise_application_error('-20001', 'vous devez rendre un document avant de pouvoir emprunter celui-la');
 end if;
 end;
 /
 
+
 -- verifie que le doc que l'on veut emprunter n'est pas deja pris
 CREATE or replace trigger trig_borrow_doc_already_borrowed
 before insert OR UPDATE 
 on borrow for EACH row
 DECLARE
-already_borrowed borrow.id_copy%type;
+already_borrowed NUMBER;
 BEGIN
-select id_copy
+select count(id_copy)
 into already_borrowed
 from borrow
 where :new.id_copy = borrow.id_copy
-and borrow.return_date is not null;
-if already_borrowed is not null
+and borrow.return_date is null;
+if already_borrowed > 0
 then raise_application_error('-20001', 'Ce document est deja emprunt√©.');
 end if;
+Exception
+when NO_DATA_FOUND then already_borrowed := 0;
 end;
 /
+
+
+
+
+
 
