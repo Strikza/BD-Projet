@@ -318,6 +318,9 @@ values (5,1,to_date('01/02/2021','dd/mm/yyyy'));
 insert into borrow (id_copy,id_borrower,borrowed_date)
 values (12,1,to_date('01/02/2021','dd/mm/yyyy'));
 
+insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
+values (24,5,to_date('08/03/2021','dd/mm/yyyy'),to_date('24/03/2021','dd/mm/yyyy'));
+
 -- tests trigger
 
 -- rendre un doc en retard
