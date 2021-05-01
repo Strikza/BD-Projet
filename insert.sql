@@ -207,19 +207,20 @@ insert into authordocument (id_document,id_author) values (17,19);
 insert into authordocument (id_document,id_author) values (18,3);
 
 -- keyword_document
-insert into keyworddocument (keyword_name,id_document) values (1,'chevalier');
-insert into keyworddocument (keyword_name,id_document) values (2,'lamentin');
-insert into keyworddocument (keyword_name,id_document) values (3,'sql');
-insert into keyworddocument (keyword_name,id_document) values (3,'entite');
-insert into keyworddocument (keyword_name,id_document) values (3,'database');
-insert into keyworddocument (keyword_name,id_document) values (5,'ensemble');
-insert into keyworddocument (keyword_name,id_document) values (16,'pl/sql');
-insert into keyworddocument (keyword_name,id_document) values (16,'sql');
-insert into keyworddocument (keyword_name,id_document) values (3,'entite');
-insert into keyworddocument (keyword_name,id_document) values (17,'database');
-insert into keyworddocument (keyword_name,id_document) values (18,'sql');
-insert into keyworddocument (keyword_name,id_document) values (18,'entite');
-insert into keyworddocument (keyword_name,id_document) values (18,'database');
+insert into keyworddocument (keyword_name,id_document) values ('chevalier',1);
+insert into keyworddocument (keyword_name,id_document) values ('lamentin',2);
+insert into keyworddocument (keyword_name,id_document) values ('sql',3);
+insert into keyworddocument (keyword_name,id_document) values ('entite',3);
+insert into keyworddocument (keyword_name,id_document) values ('database',3);
+insert into keyworddocument (keyword_name,id_document) values ('ensemble',5);
+insert into keyworddocument (keyword_name,id_document) values ('pl/sql',16);
+insert into keyworddocument (keyword_name,id_document) values ('sql',16);
+insert into keyworddocument (keyword_name,id_document) values ('entite',16);
+insert into keyworddocument (keyword_name,id_document) values ('database',16);
+insert into keyworddocument (keyword_name,id_document) values ('database',17);
+insert into keyworddocument (keyword_name,id_document) values ('sql',18);
+insert into keyworddocument (keyword_name,id_document) values ('entite',18);
+insert into keyworddocument (keyword_name,id_document) values ('database',18);
 
 -- copy
 insert into copy (id_document,shelf_num) values (1,1);
