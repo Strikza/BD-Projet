@@ -14,7 +14,7 @@ drop trigger TRIG_BORROW_AFTER_DATE_RETURN;
 
 -- creer la date de retour automatiquement + verifie que la date de retour et correcte
 CREATE or replace trigger trig_borrow_max_date
-before insert OR UPDATE 
+before insert OR UPDATE of return_date
 on borrow for EACH row
 DECLARE type_doc document.type%type;
 BEGIN
@@ -36,6 +36,53 @@ BEGIN
     then raise_application_error('-20001', 'Vous avez dépasser la date limite d emprunt pour ce document');
     end if;
 end;
+/
+
+-- verifie que l'on a pas atteint le nombre maximum d'emprunts
+CREATE or replace trigger trig_borrow_max_borrow
+before insert or update of borrowed_date
+on borrow for EACH row
+DECLARE 
+max_b borrowertype.max_borrow%type;
+current_b number;
+BEGIN
+select borrowertype.max_borrow
+into max_b
+from borrowertype
+inner join borrower on borrower.borrower_type = borrowertype.name
+where borrower.id = :new.id_borrower;
+select count(*)
+into current_b
+from borrow
+where :new.id_borrower = id_borrower
+and return_date is null;
+if current_b + 1 > max_b
+then raise_application_error('-20001', 'vous devez rendre un document avant de pouvoir emprunter celui-la');
+end if;
+end;
+/
+
+
+-- verifie que le doc que l'on veut emprunter n'est pas deja pris
+CREATE or replace trigger trig_borrow_doc_already_borrowed
+before insert OR UPDATE of id_copy
+on borrow for EACH row
+DECLARE
+already_borrowed NUMBER;
+BEGIN
+select count(id_copy)
+into already_borrowed
+from borrow
+where :new.id_copy = borrow.id_copy
+and borrow.return_date is null;
+if already_borrowed > 0
+then raise_application_error('-20001', 'Ce document est deja emprunté.');
+end if;
+Exception
+when NO_DATA_FOUND then already_borrowed := 0;
+end;
+/
+
 
 
 -- verifie lors de l'ajout d'un doc dans un rayon qu'il y ait de la place + decremente la place dans le rayon
@@ -65,51 +112,6 @@ BEGIN
 UPDATE shelf
 set remaining_slots = remaining_slots + 1
 where :new.shelf_num = shelf.shelf_num;
-end;
-/
-
--- verifie que l'on a pas atteint le nombre maximum d'emprunts
-CREATE or replace trigger trig_borrow_max_borrow
-before insert or update
-on borrow for EACH row
-DECLARE 
-max_b borrowertype.max_borrow%type;
-current_b number;
-BEGIN
-select borrowertype.max_borrow
-into max_b
-from borrowertype
-inner join borrower on borrower.borrower_type = borrowertype.name
-where borrower.id = :new.id_borrower;
-select count(*)
-into current_b
-from borrow
-where :new.id_borrower = id_borrower
-and return_date is null;
-if current_b + 1 > max_b
-then raise_application_error('-20001', 'vous devez rendre un document avant de pouvoir emprunter celui-la');
-end if;
-end;
-/
-
-
--- verifie que le doc que l'on veut emprunter n'est pas deja pris
-CREATE or replace trigger trig_borrow_doc_already_borrowed
-before insert OR UPDATE 
-on borrow for EACH row
-DECLARE
-already_borrowed NUMBER;
-BEGIN
-select count(id_copy)
-into already_borrowed
-from borrow
-where :new.id_copy = borrow.id_copy
-and borrow.return_date is null;
-if already_borrowed > 0
-then raise_application_error('-20001', 'Ce document est deja emprunté.');
-end if;
-Exception
-when NO_DATA_FOUND then already_borrowed := 0;
 end;
 /
 
