@@ -154,6 +154,7 @@ insert into document(title,id_publisher,theme,type) values ('AVL tree',5,'mathem
 insert into document(title,id_publisher,theme,type) values ('Oracle SQL Introduction',5,'informatique','video');
 insert into document(title,id_publisher,theme,type) values ('Database',6,'musique','cd');
 insert into document(title,id_publisher,theme,type) values ('SQL',3,'informatique','book');
+insert into document(title,id_publisher,theme,type) values ('Informatique',1,'informatique','book');
 
 -- book
 insert into book (id_document,pages_nb) values (1, 1390);
@@ -162,6 +163,7 @@ insert into book (id_document,pages_nb) values (3, 215);
 insert into book (id_document,pages_nb) values (4, 495);
 insert into book (id_document,pages_nb) values (5, 179);
 insert into book (id_document,pages_nb) values (18, 32);
+insert into book (id_document,pages_nb) values (19, 2390);
 
 -- cd
 insert into cd (id_document,duration,subtitles_nb) values (6,168,3);
@@ -205,6 +207,7 @@ insert into authordocument (id_document,id_author) values (15,18);
 insert into authordocument (id_document,id_author) values (16,20);
 insert into authordocument (id_document,id_author) values (17,19);
 insert into authordocument (id_document,id_author) values (18,3);
+insert into authordocument (id_document,id_author) values (19,3);
 
 -- keyword_document
 insert into keyworddocument (keyword_name,id_document) values ('chevalier',1);
@@ -234,6 +237,8 @@ insert into copy (id_document,shelf_num) values (4,1);
 insert into copy (id_document,shelf_num) values (5,1);
 insert into copy (id_document,shelf_num) values (18,1);
 insert into copy (id_document,shelf_num) values (18,1);
+insert into copy (id_document,shelf_num) values (19,1);
+insert into copy (id_document,shelf_num) values (19,1);
 
 insert into copy (id_document,shelf_num) values (6,2);
 insert into copy (id_document,shelf_num) values (6,2);

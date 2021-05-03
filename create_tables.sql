@@ -106,8 +106,8 @@ CREATE TABLE AuthorDocument (
   id_document int,
   id_author int,
   constraint PK_AuthorDocument primary key (id_document, id_author),
-  constraint FK_AuthorDocument_Author foreign key (id_author) references Author(id) on delete set null,
-  constraint FK_AuthorDocument_Document foreign key (id_document) references Document(id) on delete set null
+  constraint FK_AuthorDocument_Author foreign key (id_author) references Author(id) on delete cascade,
+  constraint FK_AuthorDocument_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
 

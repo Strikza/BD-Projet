@@ -7,6 +7,9 @@ add constraint CK_document_title check (title is not null);
 alter table borrow
 add constraint CK_borrow_date check (borrowed_date is not null);
 
+alter table borrowtime
+add constraint CK_borrow_time check (borrow_time is not null);
+
 drop trigger TRIG_BORROW_AFTER_DATE_RETURN;
 
 -- creer la date de retour automatiquement + verifie que la date de retour et correcte
@@ -51,6 +54,17 @@ else UPDATE shelf
     set remaining_slots = remaining_slots -1
     where :new.shelf_num = shelf.shelf_num;
 end if;
+end;
+/
+
+-- incremente la place dans le rayon quand doc supp 
+CREATE or replace trigger trig_shelf_num
+before delete
+on copy for EACH row
+BEGIN
+UPDATE shelf
+set remaining_slots = remaining_slots + 1
+where :new.shelf_num = shelf.shelf_num;
 end;
 /
 
@@ -102,5 +116,33 @@ end;
 
 
 
+
+-- verifie que le doc que l'on veut emprunter n'est pas deja pris : update
+CREATE or replace trigger trig_borrow_doc_already_borrowed_2
+before update
+on borrow compound trigger
+DECLARE
+already_borrowed NUMBER;
+before statement is
+BEGIN
+select count(id_copy)
+into already_borrowed
+from borrow
+where :new.id_copy = borrow.id_copy
+and borrow.return_date is null;
+end before statement;
+before each row is
+begin
+if already_borrowed > 0
+then raise_application_error('-20001', 'Ce document est deja emprunté.');
+end if;
+Exception
+when NO_DATA_FOUND then already_borrowed := 0;
+end before each row;
+after statement is
+begin
+end after statement;
+end trig_borrow_doc_already_borrowed_2;
+/
 
 
