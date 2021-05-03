@@ -117,32 +117,6 @@ end;
 
 
 
--- verifie que le doc que l'on veut emprunter n'est pas deja pris : update
-CREATE or replace trigger trig_borrow_doc_already_borrowed_2
-before update
-on borrow compound trigger
-DECLARE
-already_borrowed NUMBER;
-before statement is
-BEGIN
-select count(id_copy)
-into already_borrowed
-from borrow
-where :new.id_copy = borrow.id_copy
-and borrow.return_date is null;
-end before statement;
-before each row is
-begin
-if already_borrowed > 0
-then raise_application_error('-20001', 'Ce document est deja emprunté.');
-end if;
-Exception
-when NO_DATA_FOUND then already_borrowed := 0;
-end before each row;
-after statement is
-begin
-end after statement;
-end trig_borrow_doc_already_borrowed_2;
-/
+
 
 
