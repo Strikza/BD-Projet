@@ -24,7 +24,7 @@ BEGIN
     inner join copy on copy.id_document = document.id
     where copy.id = :New.id_copy;
     
-    select (bot.borrow_time + :New.borrowed_date)
+    select ((bot.borrow_time*7) + :New.borrowed_date)
     into :new.max_return_date
     from borrowertype bt, borrower b, borrowtime bot
     where :New.id_borrower = b.id
