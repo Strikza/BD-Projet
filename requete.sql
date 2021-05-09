@@ -33,7 +33,7 @@ and upper(p.name) = 'EYROLLES';
 select publisher.name, count(publisher.id) as nb_doc
 from publisher, document
 where publisher.id = document.id_publisher
-group by publisher.name
+group by (publisher.id,publisher.name)
 ;
 
 --8 : Liste des éditeurs ayant édité plus de deux documents d'informatique ou de mathématiques.
