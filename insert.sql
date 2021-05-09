@@ -59,7 +59,7 @@ values ('LEMAITRE','Phillipe','81 rue Gustave Eiffel 91000 RIS-ORANGIS', 0179507
 
 -- theme
 insert into theme (name) values ('informatique') ;
-insert into theme (name) values ('mathematique') ;
+insert into theme (name) values ('mathematiques') ;
 insert into theme (name) values ('ocean') ;
 insert into theme (name) values ('heroique');
 insert into theme (name) values ('musique') ;
@@ -140,7 +140,7 @@ insert into document(title,id_publisher,theme,type) values ('Le Seigneur des Ann
 insert into document(title,id_publisher,theme,type) values ('Vingt Mille Lieues sous les mers',2,'ocean','book');
 insert into document(title,id_publisher,theme,type) values ('SQL pour les nuls',3,'informatique','book');
 insert into document(title,id_publisher,theme,type) values ('Apprendre le C++',3,'informatique','book');
-insert into document(title,id_publisher,theme,type) values ('Mathématiques discrètes et combinatoire',3,'mathematique','book');
+insert into document(title,id_publisher,theme,type) values ('Mathématiques discrètes et combinatoire',3,'mathematiques','book');
 insert into document(title,id_publisher,theme,type) values ('Stadium Arcadium',6,'musique','cd');
 insert into document(title,id_publisher,theme,type) values ('The Works',6,'musique','cd');
 insert into document(title,id_publisher,theme,type) values ('Fight Club',6,'thriller','dvd');
@@ -150,7 +150,7 @@ insert into document(title,id_publisher,theme,type) values ('Star Wars V',6 ,'es
 insert into document(title,id_publisher,theme,type) values ('Star Wars VI',6,'espace','dvd');
 insert into document(title,id_publisher,theme,type) values ('Loutre',5,'ocean','video');
 insert into document(title,id_publisher,theme,type) values ('Configurer Symfony',5,'informatique','video');
-insert into document(title,id_publisher,theme,type) values ('AVL tree',5,'mathematique','video');
+insert into document(title,id_publisher,theme,type) values ('AVL tree',5,'mathematiques','video');
 insert into document(title,id_publisher,theme,type) values ('Oracle SQL Introduction',5,'informatique','video');
 insert into document(title,id_publisher,theme,type) values ('Database',6,'musique','cd');
 insert into document(title,id_publisher,theme,type) values ('SQL',3,'informatique','book');

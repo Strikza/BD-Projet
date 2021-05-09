@@ -1,6 +1,13 @@
--- 4 : Noms des auteurs ayant écrit un livre édité chez Dunod. Attention :
--- cette requête est à exécuter sur la base d'un autre collègue qui doit vous autoriser
--- à lire certaines tables (uniquement celles qui sont utiles pour la requête)
+-- 1 : Liste par ordre alphabÃ©tique des titres de documents dont le thÃ¨me comprend le mot informatique ou mathÃ©matiques.
+select title
+from document
+where theme like '%informatique%'
+order by title asc
+;
+
+-- 4 : Noms des auteurs ayant ï¿½crit un livre ï¿½ditï¿½ chez Dunod. Attention :
+-- cette requï¿½te est ï¿½ exï¿½cuter sur la base d'un autre collï¿½gue qui doit vous autoriser
+-- ï¿½ lire certaines tables (uniquement celles qui sont utiles pour la requï¿½te)
 
 create role collegue;
 grant collegue to utiliateur2;
@@ -15,30 +22,46 @@ and ad.id_document = d.id
 and d.id_publisher = p.id
 and upper(p.name) = 'DUNOD';
 
--- 5 : Quantité totale des exemplaires édités chez Eyrolles
+-- 5 : Quantitï¿½ totale des exemplaires ï¿½ditï¿½s chez Eyrolles
 select count(*) as total
 from publisher p, document d, copy c
 where p.id = d.id_publisher
 and c.id_document = d.id
 and upper(p.name) = 'EYROLLES';
 
+-- 6 : Pour chaque Ã©diteur, nombre de documents prÃ©sents Ã  la bibliothÃ¨que.
+select publisher.name, count(publisher.id) as nb_doc
+from publisher, document
+where publisher.id = document.id_publisher
+group by publisher.name
+;
 
--- 10 : Liste des éditeurs n'ayant pas édité de documents d'informatique
+--8 : Liste des Ã©diteurs ayant Ã©ditÃ© plus de deux documents d'informatique ou de mathÃ©matiques.
+select id_publisher, name
+from document, publisher
+where publisher.id = document.id_publisher
+and theme like 'informatique' or theme like 'mathematiques'
+group by id_publisher,name
+having count(id_publisher) > 2
+;
+
+
+-- 10 : Liste des ï¿½diteurs n'ayant pas ï¿½ditï¿½ de documents d'informatique
 select id, name
 from publisher
 where id not in (select id_publisher
       	     	from document
                 where upper(theme) = 'INFORMATIQUE');
 
--- 12 : Liste des documents n'ayant jamais été empruntés
+-- 12 : Liste des documents n'ayant jamais ï¿½tï¿½ empruntï¿½s
 select id,title
 from document
 where id not in (select distinct c.id_document
       	     	from copy c, borrow b
 		where c.id = b.id_copy);
 
--- 13 : Donnez la liste des emprunteurs (nom, prénom) appartenant à la catégorie
--- des professionnels ayant emprunté au moins une fois un dvd au cours des 6 derniers mois.
+-- 13 : Donnez la liste des emprunteurs (nom, prï¿½nom) appartenant ï¿½ la catï¿½gorie
+-- des professionnels ayant empruntï¿½ au moins une fois un dvd au cours des 6 derniers mois.
 select last_name, first_name
 from borrower
 where upper(borrower_type) = 'PROFESSIONNEL'
@@ -49,7 +72,21 @@ and id in (select b.id_borrower
 	      and upper(d.type) = 'DVD'
 	      and b.borrowed_date >= sysdate - 182);
 
--- 16 : Éditeur dont le nombre de documents empruntés est le plus grand.
+--14 : Liste des documents dont le nombre d'exemplaires est supÃ©rieur au nombre moyend'exemplaires.
+select document.title
+from copy, document
+where copy.id_document = document.id
+group by document.title
+having count(document.title) >(
+select avg(nb_copy) from(
+select count(id_document) as nb_copy
+from copy
+group by id_document
+))
+;
+
+
+-- 16 : ï¿½diteur dont le nombre de documents empruntï¿½s est le plus grand.
 select p.id, p.name
 from publisher p, document d, copy c, borrow b
 where p.id = d.id_publisher
@@ -62,5 +99,55 @@ having count(b.id_copy) = (select max(count(*))
                         and c.id_document = d.id
                         group by (d.id_publisher));
 
+
+-- 17 : Liste des documents n'ayant aucun mot-clef en commun avec le document dont le titre est "SQL pour les nuls".
+select *
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and keyword.name  not in (
+select name
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and document.title = 'SQL pour les nuls'
+)
+;
+
+-- 18 : Liste des documents ayant au moins un mot-clef en commun avec le document dont le titre est"SQL pour les nuls".
+select *
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and keyword.name  in (
+select name
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and document.title = 'SQL pour les nuls'
+)
+;
+
+-- 19 : Liste des documents ayant au moins les mÃªmes mot-clef que le document dont le titre est "SQL pour les nuls".
+select document.title
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and keyword.name  in (
+select name as keywordname
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and document.title = 'SQL pour les nuls'
+)
+group by document.title
+having count(distinct keyword.name) = (
+select count(name)
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and document.title = 'SQL pour les nuls'
+)
+;
 
 
