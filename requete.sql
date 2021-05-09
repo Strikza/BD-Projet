@@ -73,16 +73,15 @@ and id in (select b.id_borrower
 	      and b.borrowed_date >= sysdate - 182);
 
 --14 : Liste des documents dont le nombre d'exemplaires est supérieur au nombre moyend'exemplaires.
-select document.title
+select document.id, document.title
 from copy, document
 where copy.id_document = document.id
-group by document.title
-having count(document.title) >(
-select avg(nb_copy) from(
-select count(id_document) as nb_copy
-from copy
-group by id_document
-))
+group by (document.id, document.title)
+having count(copy.id_document) > (
+                                select avg(count(*)) nb
+                                from copy
+                                group by (id_document)
+                                )
 ;
 
 
@@ -129,25 +128,41 @@ and document.title = 'SQL pour les nuls'
 ;
 
 -- 19 : Liste des documents ayant au moins les mêmes mot-clef que le document dont le titre est "SQL pour les nuls".
-select document.title
-from document, keyword, keyworddocument
-where document.id = keyworddocument.id_document
-and keyword.name = keyworddocument.keyword_name
-and keyword.name  in (
-select name as keywordname
+with keyw as (
+select name k
 from document, keyword, keyworddocument
 where document.id = keyworddocument.id_document
 and keyword.name = keyworddocument.keyword_name
 and document.title = 'SQL pour les nuls'
 )
-group by document.title
-having count(distinct keyword.name) = (
-select count(name)
+select DISTINCT document.id, document.title
 from document, keyword, keyworddocument
 where document.id = keyworddocument.id_document
 and keyword.name = keyworddocument.keyword_name
-and document.title = 'SQL pour les nuls'
-)
+and keyword.name  in (select k from keyw)
+group by (document.id,document.title)
+having count(distinct keyword.name) >= (select count(distinct k) from keyw)
 ;
 
+-- 20
+with keyw as (
+select name k
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and document.title = 'SQL pour les nuls'
+), docmatch as (
+select document.id
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+and keyword.name  in (select k from keyw)
+)
+select document.id, document.title
+from document, keyword, keyworddocument
+where document.id = keyworddocument.id_document
+and keyword.name = keyworddocument.keyword_name
+group by (document.id,document.title)
+having count(*) = (select count(distinct k) from keyw)
+;
 
