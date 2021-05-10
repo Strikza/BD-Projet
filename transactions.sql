@@ -18,6 +18,8 @@ commit;
 -- transaction dans document
 -- ajout
 lock table document in share row exclusive mode;
++ ajout dans la table du type correspondant (book,cd,dvd ou video)
+lock table book in share row exclusive mode;
 
 -- suppression 
 select *
