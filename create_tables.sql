@@ -116,7 +116,7 @@ CREATE TABLE KeywordDocument (
   Keyword_name varchar2(50),
   id_document int,
   constraint PK_KeywordDocument primary key (Keyword_name, id_document),
-  constraint FK_KeywordDocument_Keyword foreign key (keyword_name) references Keyword(name) on delete set null,
+  constraint FK_KeywordDocument_Keyword foreign key (keyword_name) references Keyword(name) on delete cascade,
   constraint FK_KeywordDocument_Document foreign key (id_document) references Document(id) on delete cascade
 );
 
@@ -204,8 +204,8 @@ CREATE TABLE Borrow (
   max_return_date date,
   return_date date,
   constraint PK_Borrow primary key (id_copy, id_borrower, borrowed_date),
-  constraint FK_Borrow_Copy foreign key (id_copy) references Copy(id) on delete set null,
-  constraint FK_Borrow_Borrower foreign key (id_borrower) references Borrower(id) on delete set null
+  constraint FK_Borrow_Copy foreign key (id_copy) references Copy(id) on delete cascade,
+  constraint FK_Borrow_Borrower foreign key (id_borrower) references Borrower(id) on delete cascade
 );
 
 
