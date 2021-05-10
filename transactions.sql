@@ -5,6 +5,7 @@ SET AUTOCOMMIT OFF;
 
 -- ajout
 LOCK TABLE borrower IN exclusive MODE
+lock table borrowertype in share mode
 insert into borrower(last_name,first_name,address,phone,borrower_type)
 values ('nom','prenom','address',0011223344,'PUBLIC');
 commit;
@@ -22,7 +23,9 @@ commit;
 savepoint ajout_doc;
 lock table document in exclusive mode;
 -- insert document
+lock table book in exclusive mode;
 -- insert book
+lock table authordocument in exclusive mode;
 -- insert authorducument
 -- si probleme rollback to ajout_doc
 commit;
