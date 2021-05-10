@@ -9,7 +9,28 @@ values ('nom','prenom','address',0011223344,'PUBLIC');
 commit;
 
 -- suppresion
-LOCK TABLE borrower IN SHARE ROW EXCLUSIVE MODE
+select *
+from borrower 
+where id = 5 for update;
 delete from borrower where id = 5;
 commit;
+
+-- transaction dans document
+-- ajout
+lock table document in share row exclusive mode;
+
+-- suppression 
+select *
+from document 
+where id = 1 for update;
+
+-- transaction dans borrow
+-- ajout
+lock table borrow in share row exclusive mode;
+
+-- suppression 
+select *
+from borrow 
+where id = 1 for update;
+
 

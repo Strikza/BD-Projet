@@ -100,7 +100,7 @@ having count(b.id_copy) = (select max(count(*))
 
 
 -- 17 : Liste des documents n'ayant aucun mot-clef en commun avec le document dont le titre est "SQL pour les nuls".
-select *
+select document.id, document.title
 from document, keyword, keyworddocument
 where document.id = keyworddocument.id_document
 and keyword.name = keyworddocument.keyword_name
@@ -114,7 +114,7 @@ and document.title = 'SQL pour les nuls'
 ;
 
 -- 18 : Liste des documents ayant au moins un mot-clef en commun avec le document dont le titre est"SQL pour les nuls".
-select *
+select document.id, document.title
 from document, keyword, keyworddocument
 where document.id = keyworddocument.id_document
 and keyword.name = keyworddocument.keyword_name
