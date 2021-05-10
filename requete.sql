@@ -79,10 +79,10 @@ having count(publisher.id) > 2
 ;
 
 
--- 9 : Noms des emprunteurs habitant la même adresse que DUPONT
+-- 9 : Noms des emprunteurs habitant la même adresse que Dupond
 select bwer.last_name, bwer.first_name
 from Borrower duppond, Borrower bwer
-where duppond.last_name = 'DUPONT'
+where duppond.last_name = 'DUPOND'
 and bwer.address = duppond.address;
 
 
