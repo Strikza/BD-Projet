@@ -6,13 +6,13 @@ order by title asc
 ;
 
 
--- 2 : Liste (titre et thème) des documents empruntés par Dupond entre le 15/11/2018 et le 15/11/2019
+-- 2 : Liste (titre et thème) des documents empruntés par DUPONT entre le 15/11/2018 et le 15/11/2019
 select distinct doc.title, doc.theme
 from Document doc, Copy cp, Borrow bw, Borrower bwer
     where bwer.id = bw.id_borrower
     and bw.id_copy = cp.id
     and cp.id_document = doc.id
-    and bwer.last_name = 'DUPOND'
+    and bwer.last_name = 'DUPONT'
     and bw.borrowed_date between to_date('15/11/2018', 'dd/mm/yyyy') 
                              and to_date('15/11/2019', 'dd/mm/yyyy');
 
@@ -79,10 +79,10 @@ having count(publisher.id) > 2
 ;
 
 
--- 9 : Noms des emprunteurs habitant la même adresse que Dupond
+-- 9 : Noms des emprunteurs habitant la même adresse que DUPONT
 select bwer.last_name, bwer.first_name
 from Borrower duppond, Borrower bwer
-where duppond.last_name = 'DUPOND'
+where duppond.last_name = 'DUPONT'
 and bwer.address = duppond.address;
 
 
