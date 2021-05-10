@@ -10,7 +10,7 @@ add constraint CK_borrow_date check (borrowed_date is not null);
 alter table borrowtime
 add constraint CK_borrow_time check (borrow_time is not null);
 
--- creer la date de retour automatiquement + verifie que la date de retour et correcte
+-- créé la date de retour automatiquement + vérifie que la date de retour et correcte
 CREATE or replace trigger trig_borrow_max_date
 before insert OR UPDATE of return_date
 on borrow for EACH row
@@ -31,12 +31,12 @@ BEGIN
     and bot.doc_type = type_doc;
     
     if :new.return_date is not null and :new.max_return_date < :new.return_date
-    then raise_application_error('-20001', 'Vous avez dépasser la date limite d emprunt pour ce document');
+    then raise_application_error('-20001', 'Vous avez dépassé la date limite d emprunt pour ce document');
     end if;
 end;
 /
 
--- verifie que l'on a pas atteint le nombre maximum d'emprunts
+-- vérifie que l'on n'a pas atteint le nombre maximum d'emprunts
 CREATE or replace trigger trig_borrow_max_borrow
 before insert or update of borrowed_date
 on borrow for EACH row
@@ -55,13 +55,13 @@ from borrow
 where :new.id_borrower = id_borrower
 and return_date is null;
 if current_b + 1 > max_b
-then raise_application_error('-20001', 'vous devez rendre un document avant de pouvoir emprunter celui-la');
+then raise_application_error('-20001', 'Vous devez rendre un document avant de pouvoir emprunter celui-la');
 end if;
 end;
 /
 
 
--- verifie que le doc que l'on veut emprunter n'est pas deja pris
+-- vérifie que le doc que l'on veut emprunter n'est pas déjà pris
 CREATE or replace trigger trig_borrow_doc_already_borrowed
 before insert OR UPDATE of id_copy
 on borrow for EACH row
@@ -74,7 +74,7 @@ from borrow
 where :new.id_copy = borrow.id_copy
 and borrow.return_date is null;
 if already_borrowed > 0
-then raise_application_error('-20001', 'Ce document est deja emprunté.');
+then raise_application_error('-20001', 'Ce document est déjà emprunté.');
 end if;
 Exception
 when NO_DATA_FOUND then already_borrowed := 0;
@@ -83,7 +83,7 @@ end;
 
 
 
--- verifie lors de l'ajout d'un doc dans un rayon qu'il y ait de la place + decremente la place dans le rayon
+-- vérifie lors de l'ajout d'un doc dans un rayon qu'il y ait de la place + décrémente la place dans le rayon
 CREATE or replace trigger trig_shelf_num
 before insert or update
 on copy for EACH row
@@ -94,7 +94,7 @@ into new_num
 from shelf
 where shelf.shelf_num = :new.shelf_num;
 if new_num < 0
-then raise_application_error('-20001', 'il n y a plus de place dans le rayon');
+then raise_application_error('-20001', 'Il n y a plus de place dans le rayon');
 else UPDATE shelf
     set remaining_slots = remaining_slots -1
     where :new.shelf_num = shelf.shelf_num;
@@ -102,7 +102,7 @@ end if;
 end;
 /
 
--- incremente la place dans le rayon quand doc supp 
+-- incrémente la place dans le rayon quand un doc est supprimé 
 CREATE or replace trigger trig_shelf_num
 before delete
 on copy for EACH row
