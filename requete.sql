@@ -70,17 +70,17 @@ group by (doc.id,doc.title);
 
 
 --8 : Liste des éditeurs ayant édité plus de deux documents d'informatique ou de mathématiques.
-select id_publisher, name
+select publisher.id, name
 from document, publisher
 where publisher.id = document.id_publisher
 and theme like 'informatique' or theme like 'mathematiques'
-group by id_publisher,name
-having count(id_publisher) > 2
+group by publisher.id,name
+having count(publisher.id) > 2
 ;
 
 
 -- 9 : Noms des emprunteurs habitant la même adresse que Dupond
-select distinct bwer.last_name, bwer.first_name
+select bwer.last_name, bwer.first_name
 from Borrower duppond, Borrower bwer
 where duppond.last_name = 'DUPOND'
 and bwer.address = duppond.address;

@@ -27,7 +27,7 @@ insert into borrowtime (borrower_type,doc_type,borrow_time) values ('public','vi
 
 -- borrower
 insert into borrower (last_name,first_name,address,phone,borrower_type)
-values ('DUPOND','Marcel','4 rue des etoiles 86000 Poitiers', 0501020304, 'public') ;
+values ('DUPONT','Marcel','4 rue des etoiles 86000 Poitiers', 0501020304, 'public') ;
 insert into borrower (last_name,first_name,address,phone,borrower_type)
 values ('MARTIN','Rene','4 rue des etoiles 86000 Poitiers', 0511121314, 'public') ;
 insert into borrower (last_name,first_name,address,phone,borrower_type)
@@ -51,7 +51,7 @@ values ('AGRICAN','Marjorie','16 rue des Chaligny 06200 NICE', 0422695920, 'prof
 insert into borrower (last_name,first_name,address,phone,borrower_type)
 values ('FAUCHER','Pierrette','67 rue du Clair Bocage 83160 LA VALETTE-DU-VAR', 0483719985, 'personnel') ;
 insert into borrower (last_name,first_name,address,phone,borrower_type)
-values ('BRoCCOLI','Pierrette','40 avenue de l''Amandier 93140 BONDY', 0186882714, 'public') ;
+values ('BROCCOLI','Pierrette','40 avenue de l''Amandier 93140 BONDY', 0186882714, 'public') ;
 insert into borrower (last_name,first_name,address,phone,borrower_type)
 values ('LEBEL','Roland','23 Rue Joseph Vernet 93170 BAGNOLET', 0149085467, 'public') ;
 insert into borrower (last_name,first_name,address,phone,borrower_type)
@@ -294,7 +294,7 @@ insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
 values (1,3,to_date('03/06/2020','dd/mm/yyyy'),to_date('15/06/2020','dd/mm/yyyy'));
 
 insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
-values (14,1,to_date('09/10/2018','dd/mm/yyyy'),to_date('17/10/2018','dd/mm/yyyy'));
+values (14,1,to_date('09/10/2019','dd/mm/yyyy'),to_date('17/10/2019','dd/mm/yyyy'));
 
 insert into borrow (id_copy,id_borrower,borrowed_date,return_date)
 values (7,4,to_date('18/01/2019','dd/mm/yyyy'),to_date('26/01/2019','dd/mm/yyyy'));
