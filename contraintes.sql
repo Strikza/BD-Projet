@@ -10,8 +10,6 @@ add constraint CK_borrow_date check (borrowed_date is not null);
 alter table borrowtime
 add constraint CK_borrow_time check (borrow_time is not null);
 
-drop trigger TRIG_BORROW_AFTER_DATE_RETURN;
-
 -- creer la date de retour automatiquement + verifie que la date de retour et correcte
 CREATE or replace trigger trig_borrow_max_date
 before insert OR UPDATE of return_date

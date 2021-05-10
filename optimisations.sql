@@ -16,14 +16,14 @@ create index copy_id_doc on copy(id_document);
 create bitmap index bidx_document_theme on document(theme);
 
 -- Q.10
-create index document_theme on document(upper(theme));
+-- reutilisation de l'index sur le theme des document
 
 -- Q.12
 -- rien
 
 -- Q.13
-create index borrower_type on borrower(upper(borrower_type));
-create index document_type on document(upper(type));
+create bitmap index bidx_borrower_type on borrower(upper(borrower_type));
+create bitmap index bidx_document_type on document(upper(type));
 
 -- Q.14
 -- faire une vue concrete sur le count
