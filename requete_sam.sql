@@ -36,6 +36,16 @@ from Borrower bwer
 where bwer.id not in (select distinct bw.id_borrower from Borrow bw);
 
 -- 15 : Noms des auteurs ayant écrit des documents d'informatique et de mathématiques (ceux qui ont écrit les deux)
-
+select distinct a.id, a.last_name, a.first_name
+from author a, authordocument ad, document d
+where a.id = ad.id_author
+and ad.id_document = d.id
+and upper(d.theme) = 'INFORMATIQUE'
+intersect
+select distinct a.id, a.last_name, a.first_name
+from author a, authordocument ad, document d
+where a.id = ad.id_author
+and ad.id_document = d.id
+and upper(d.theme) = 'MATHEMATIQUES';
 -- 20 : Liste des documents ayant exactement les mêmes mot-clef que le document dont le titre est "SQL pour les nuls"
 

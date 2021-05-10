@@ -207,7 +207,7 @@ insert into authordocument (id_document,id_author) values (15,18);
 insert into authordocument (id_document,id_author) values (16,20);
 insert into authordocument (id_document,id_author) values (17,19);
 insert into authordocument (id_document,id_author) values (18,3);
-insert into authordocument (id_document,id_author) values (19,3);
+insert into authordocument (id_document,id_author) values (19,18);
 
 -- keyword_document
 insert into keyworddocument (keyword_name,id_document) values ('chevalier',1);
