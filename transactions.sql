@@ -2,6 +2,7 @@
 SET AUTOCOMMIT OFF;
 
 -- transaction dans borrower
+
 -- ajout
 LOCK TABLE borrower IN SHARE ROW EXCLUSIVE MODE
 insert into borrower(last_name,first_name,address,phone,borrower_type)
@@ -16,10 +17,9 @@ delete from borrower where id = 5;
 commit;
 
 -- transaction dans document
+
 -- ajout
 lock table document in share row exclusive mode;
-+ ajout dans la table du type correspondant (book,cd,dvd ou video)
-lock table book in share row exclusive mode;
 
 -- suppression 
 select *
