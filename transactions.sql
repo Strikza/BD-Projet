@@ -4,7 +4,7 @@ SET AUTOCOMMIT OFF;
 -- transaction dans borrower
 
 -- ajout
-LOCK TABLE borrower IN SHARE MODE
+LOCK TABLE borrower IN exclusive MODE
 insert into borrower(last_name,first_name,address,phone,borrower_type)
 values ('nom','prenom','address',0011223344,'PUBLIC');
 commit;
@@ -20,7 +20,7 @@ commit;
 
 -- ajout
 savepoint ajout_doc;
-lock table document in share mode;
+lock table document in exclusive mode;
 -- insert document
 -- insert book
 -- insert authorducument
@@ -35,7 +35,7 @@ commit;
 
 -- transaction dans borrow
 -- ajout
-lock table borrow in share mode;
+lock table borrow in exclusive mode;
 commit;
 
 -- suppression 
