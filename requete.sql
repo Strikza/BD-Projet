@@ -212,7 +212,7 @@ having count(distinct keyword.name) >= (select count(distinct k) from keyw)
 
 -- 20
 with keyw as (
-select name k
+select name 
 from document, keyword, keyworddocument
 where document.id = keyworddocument.id_document
 and keyword.name = keyworddocument.keyword_name
@@ -222,13 +222,13 @@ select document.id
 from document, keyword, keyworddocument
 where document.id = keyworddocument.id_document
 and keyword.name = keyworddocument.keyword_name
-and keyword.name  in (select k from keyw)
+and keyword.name  in (select name from keyw)
 )
-select document.id, document.title
-from document, keyword, keyworddocument
-where document.id = keyworddocument.id_document
-and keyword.name = keyworddocument.keyword_name
-group by (document.id,document.title)
-having count(*) = (select count(distinct k) from keyw)
+select document.id, document.title 
+from document, docmatch, keyworddocument kd
+where document.id = docmatch.id
+and document.id = kd.id_document
+group by (document.id, document.title)
+having count(distinct kd.keyword_name) = (select count(name) from keyw)
 ;
 

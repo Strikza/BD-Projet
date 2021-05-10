@@ -41,6 +41,9 @@ create index idx_publisher_id_name on publisher(id,name);
 create index idx_document_id_title on document(id,title);
 
 
+-- Q.7
+-- Pas d'optimisation
+
 -- Q.8
 create bitmap index bidx_document_theme on document(upper(theme));
 
@@ -49,11 +52,17 @@ create bitmap index bidx_document_theme on document(upper(theme));
 create index idx_borrower_address on borrower(address);
 
 
+-- Q.9
+-- On reprend l'index sur l'attribut last_name de la requête n°2, et on en créé un autre sur l'adresse de Borrower
+
 -- Q.10
 -- reutilisation de l'index sur le theme des document et de l'index sur l'id et le nom de l'éditeur
 
 -- Q.11
 -- pas d'optimisations possibles
+
+-- Q.11
+-- Pas d'optimisation
 
 -- Q.12
 -- rien
